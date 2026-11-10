@@ -61,6 +61,60 @@ get_header();
             </div>
         </div>
     </section>
+
+    <?php
+    $demo_projects = new WP_Query(
+        array(
+            'post_type'      => 'project',
+            'posts_per_page' => 4,
+            'post_status'    => 'publish',
+        )
+    );
+    if ($demo_projects->have_posts()) :
+        ?>
+        <section id="work" class="container py-5" aria-labelledby="kinetix-projects-title">
+            <h2 id="kinetix-projects-title" class="h3 mb-4"><?php echo esc_html__('Selected work', 'kinetix'); ?></h2>
+            <div class="row g-4">
+                <?php while ($demo_projects->have_posts()) : $demo_projects->the_post(); ?>
+                    <div class="col-md-6">
+                        <article class="kinetix-card card-style-<?php echo esc_attr(get_theme_mod('kinetix_card_style', 'spotlight')); ?> h-100">
+                            <h3 class="h5"><?php echo esc_html(get_the_title()); ?></h3>
+                            <p class="text-secondary mb-0"><?php echo wp_kses_post(get_the_excerpt()); ?></p>
+                        </article>
+                    </div>
+                <?php endwhile; ?>
+            </div>
+        </section>
+        <?php
+        wp_reset_postdata();
+    endif;
+
+    $demo_research = new WP_Query(
+        array(
+            'post_type'      => 'research',
+            'posts_per_page' => 2,
+            'post_status'    => 'publish',
+        )
+    );
+    if ($demo_research->have_posts()) :
+        ?>
+        <section id="research" class="container py-5" aria-labelledby="kinetix-research-title">
+            <h2 id="kinetix-research-title" class="h3 mb-4"><?php echo esc_html__('Research papers', 'kinetix'); ?></h2>
+            <div class="row g-4">
+                <?php while ($demo_research->have_posts()) : $demo_research->the_post(); ?>
+                    <div class="col-md-6">
+                        <article class="kinetix-card card-style-<?php echo esc_attr(get_theme_mod('kinetix_card_style', 'spotlight')); ?> h-100">
+                            <h3 class="h5"><?php echo esc_html(get_the_title()); ?></h3>
+                            <p class="text-secondary mb-0"><?php echo wp_kses_post(get_the_excerpt()); ?></p>
+                        </article>
+                    </div>
+                <?php endwhile; ?>
+            </div>
+        </section>
+        <?php
+        wp_reset_postdata();
+    endif;
+    ?>
 </main>
 
 <?php get_footer(); ?>

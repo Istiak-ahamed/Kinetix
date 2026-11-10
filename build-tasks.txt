@@ -1,76 +1,73 @@
-[TASK: KINETIX ENTERPRISE MULTI-COMPONENT & CUSTOMIZER ENGINE]
-Objective: Build a commercial-grade, multi-variant design system for Kinetix Enterprise featuring 4 header styles, 4 card styles, Apple magnetic cursor, cache-busting asset enqueues, and WordPress Customizer integration.
+[TASK: KINETIX ENTERPRISE DASHBOARD & 1-CLICK DEMO DATA IMPORTER (DYNAMIC LOGO READY)]
+Objective: Register a top-level WordPress admin menu with dynamic logo support, Customizer shortcuts, and a native 1-Click Starter Site Importer with rich dummy data.
 
-File 1: assets/js/kinetix-cursor.js
-Requirements:
-- Completely replace file.
-- Check: window.matchMedia('(pointer: fine)').matches.
-- Wipe any existing .kinetix-cursor-*, .kinetix-magnetic-cursor elements from DOM.
-- Inject single div: <div class="kinetix-magnetic-cursor"></div> into body.
-- Apple Magnetic Capsule Physics:
-  - Free-floating: 8px white/crimson dot centered directly on clientX/clientY using translate3d.
-  - Magnetic Snapping:
-    - Selector: 'a, button, input, .btn, .kinetix-nav-link, .kinetix-card, .btn-kinetix-crimson, [role="button"]'.
-    - On hover: getBoundingClientRect() of target element.
-    - Smoothly lerp target width and height to (rect.width + 12px) and (rect.height + 12px).
-    - Center coordinates to element midpoint: (rect.left + rect.width/2) and (rect.top + rect.height/2).
-    - Inherit target's computed borderRadius dynamically.
-  - Lerp factor 0.22 for fluid 60/120Hz spring physics across all resolutions (1080p to 4K).
-  - Aceternity Spotlight Mouse Tracker:
-    - For all elements with class .card-style-spotlight, track mousemove and update CSS variables --mouse-x and --mouse-y relative to card rect.
-
-File 2: assets/css/kinetix-core.css
-Requirements:
-1. Global Pointer Suppression:
-   @media (pointer: fine) {
-     html, body, a, button, input, textarea, select, [role="button"], .btn {
-       cursor: none !important;
-     }
-   }
-2. Apple Magnetic Capsule Styling (.kinetix-magnetic-cursor):
-   - position: fixed; top: 0; left: 0; pointer-events: none; z-index: 99999999;
-   - width: 8px; height: 8px; background: #ffffff; border-radius: 9999px;
-   - will-change: transform, width, height, border-radius, background, border;
-   - transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1), height 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-radius 0.25s ease, background 0.2s ease, border 0.2s ease, opacity 0.2s ease;
-   - .is-snapped state:
-     background: rgba(255, 42, 42, 0.12) !important;
-     border: 1.5px solid rgba(255, 42, 42, 0.5) !important;
-     backdrop-filter: blur(10px);
-     box-shadow: 0 0 25px rgba(255, 42, 42, 0.25);
-3. 4 Card Style Variants:
-   - .card-style-spotlight (Aceternity): position relative, overflow hidden, background #111111, border 1px solid rgba(255,255,255,0.08), dynamic radial-gradient using var(--mouse-x) and var(--mouse-y).
-   - .card-style-apple: Pure ultra-matte dark glass, background rgba(18, 18, 18, 0.65), backdrop-filter blur(20px), border 1px solid rgba(255,255,255,0.05), soft lift shadow on hover.
-   - .card-style-halo: Dark card with a subtle crimson ambient glow outline on hover (box-shadow 0 0 30px rgba(255,42,42,0.18)).
-   - .card-style-hud: Technical monospace aesthetic, corner bracket borders (accented with #ff2a2a), and metadata tags.
-4. 4 Header Style Variants:
-   - .header-style-pill: Floating centered glassmorphic pill (Quayutec).
-   - .header-style-apple: Edge-to-edge sticky minimalist header with 1px hairline bottom border and 20px blur.
-   - .header-style-split: Three detached floating islands (Brand left, Nav center, CTA right).
-   - .header-style-minimal: Clean transparent header with subtle border on scroll.
-
-File 3: inc/customizer/customizer.php
+File 1: inc/admin/class-kinetix-dashboard.php
 Requirements:
 - Strict defined('ABSPATH') || exit; guard.
-- Register WordPress Customizer Controls under section 'kinetix_variants':
-  1. Setting 'kinetix_header_style': Select (Choices: 'pill' => 'Floating Pill (Quayutec)', 'apple' => 'Apple Minimalist Bar', 'split' => 'Split Floating Islands', 'minimal' => 'Transparent Minimal'). Default: 'pill'.
-  2. Setting 'kinetix_card_style': Select (Choices: 'spotlight' => 'Aceternity Mouse Spotlight', 'apple' => 'Apple Ultra-Matte Glass', 'halo' => 'Crimson Ambient Halo', 'hud' => 'Technical Monospace HUD'). Default: 'spotlight'.
-  3. Setting 'kinetix_cursor_style': Select (Choices: 'magnetic' => 'Apple Fluid Magnetic Capsule', 'none' => 'Standard OS Cursor'). Default: 'magnetic'.
-  4. Setting 'kinetix_accent_color': Color Control (Default: '#ff2a2a').
-  5. Setting 'kinetix_bg_color': Color Control (Default: '#080808').
-- Function kinetix_customizer_head_output():
-  - Echo dynamic CSS variables and inject selected card/header modifier classes.
+- Dynamic Brand Mark Logic:
+  - Check if 'assets/images/admin-icon.svg' or 'assets/images/admin-icon.png' exists in the theme.
+  - If yes, use KINETIX_URI . '/assets/images/admin-icon.png' (or .svg) as the menu icon URL.
+  - Fallback: Output an inline base64 SVG of a modern bold 'K' monogram (crimson #ff2a2a on dark circular backing). This makes the logo 100% hot-swappable in the future just by dropping an image file into assets/images/.
+- Register top-level admin menu:
+  - Page Title: 'Kinetix Dashboard'
+  - Menu Title: 'Kinetix'
+  - Capability: 'manage_options'
+  - Menu Slug: 'kinetix-dashboard'
+  - Function: 'kinetix_render_dashboard'
+  - Position: 59 (Right below Appearance).
+- Submenus:
+  - 'Dashboard' (slug: 'kinetix-dashboard')
+  - 'Starter Sites' (slug: 'kinetix-starter-sites')
+  - 'Customize Styles' (redirects to wp-admin/customize.php)
+- Dashboard View ('kinetix-dashboard'):
+  - Quayutec dark mode styling inside WP Admin (#0a0a0a background, #121212 cards, #ff2a2a accents).
+  - Quick Customizer launcher cards:
+    - "Color Palette & Accent" -> customize.php?autofocus[section]=kinetix_variants
+    - "Typography (Anton & Inter)" -> customize.php
+    - "Header & Navigation Styles" -> customize.php
+    - "Card & Motion Styles" -> customize.php
+  - License Status badge ("Enterprise Active").
 
-File 4: inc/core/enqueue.php
+File 2: inc/admin/class-kinetix-importer.php
 Requirements:
-- Ensure wp_enqueue_style and wp_enqueue_script use time() as the version string during development for instant browser cache-busting.
+- Strict defined('ABSPATH') || exit; guard.
+- AJAX Handler: 'kinetix_import_starter_site' (wp_ajax_kinetix_import_starter_site).
+- Check nonce 'kinetix_importer_nonce' and capability 'manage_options'.
+- Demo Data Generation Logic (Clean WordPress Core Functions):
+  1. Create 4 High-Margin Demo Projects (Custom Post Type: 'project'):
+     - 'Apex Global Masters 2026' (Broadcast packaging, stingers, tournament screen loops).
+     - 'BEXO Esports Brand Identity' (Full motion system, team overlays, 3D logo loop).
+     - 'Rogue Nation Championship Stream' (High-ticket broadcast assets, sponsor lower thirds).
+     - 'DF+ Dynamic Screen System' (Arena LED visuals, multi-camera transitions).
+  2. Create 2 Scholarly Research Articles (Custom Post Type: 'research'):
+     - 'Pharmacokinetics of Novel Antiviral Compounds in Feline Medicine' (Complete abstract, DOI, sample citation meta).
+     - 'Real-Time Telemetry and Edge Compute in Equine Diagnostics' (Abstract, methodology, sample PDF link).
+  3. Create 3 Turnkey Sprint Tiers (Metadata / Options):
+     - Sprint Alpha ($1,000 / 3-Day Turnaround)
+     - Sprint Studio ($2,500 / 7-Day Turnaround)
+     - Tournament Packaging ($5,000 / Turnkey Full Event)
+  4. Ensure front-page.php dynamically displays imported demo projects and research articles if they exist in the database.
+  5. Return JSON: { success: true, message: 'Kinetix Enterprise Starter Site imported successfully!' }.
+- Starter Sites View ('kinetix-starter-sites'):
+  - Display preview card: "Kinetix Broadcast & Research Flagship (Quayutec + VetSafeCare)".
+  - "Import Demo Site" button with AJAX loading spinner and success modal.
 
-File 5: templates/header-floating.php & header.php
+File 3: inc/core/post-types.php
 Requirements:
-- Dynamically render the chosen header layout based on get_theme_mod('kinetix_header_style', 'pill').
+- Register Custom Post Type: 'project'
+  - Labels: Projects, Project, Add New Project
+  - Supports: title, editor, thumbnail, excerpt, custom-fields
+  - Has archive: true, rewrite: ['slug' => 'projects']
+- Register Custom Post Type: 'research'
+  - Labels: Research Papers, Research Paper, Add New Paper
+  - Supports: title, editor, thumbnail, excerpt, custom-fields
+  - Has archive: true, rewrite: ['slug' => 'research']
 
-File 6: front-page.php
+File 4: functions.php
 Requirements:
-- Apply the chosen card class: class="kinetix-card <?php echo esc_attr('card-style-' . get_theme_mod('kinetix_card_style', 'spotlight')); ?>" to hero showcase card.
+- Require inc/admin/class-kinetix-dashboard.php
+- Require inc/admin/class-kinetix-importer.php
+- Require inc/core/post-types.php
 
 Git Action:
-- Stage all files with 'git add .' and prompt user for permission to commit with: "feat: add multi-variant design system (4 headers, 4 cards, Apple magnetic cursor) with live Customizer controls".
+- Stage all files with 'git add .' and prompt user for permission to commit with: "feat: add Kinetix admin dashboard with dynamic logo support and 1-Click Starter Site demo importer".
