@@ -17,4 +17,11 @@ defined('ABSPATH') || exit;
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
-<?php get_template_part('templates/header-floating'); ?>
+<?php
+$kinetix_header_style = get_theme_mod('kinetix_header_style', 'pill');
+get_template_part(
+    'templates/header-floating',
+    null,
+    array('header_style' => $kinetix_header_style)
+);
+?>

@@ -1,6 +1,54 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const cards = document.querySelectorAll('.aceternity-spotlight-card');
-    cards.forEach((card) => {
+    if (!window.matchMedia('(pointer: fine)').matches) {
+        return;
+    }
+
+    document.querySelectorAll('.kinetix-cursor-*, .kinetix-magnetic-cursor').forEach((element) => {
+        element.remove();
+    });
+
+    if (document.body.classList.contains('kinetix-cursor-style-none')) {
+        return;
+    }
+
+    const cursor = document.createElement('div');
+    cursor.className = 'kinetix-magnetic-cursor';
+    document.body.appendChild(cursor);
+
+    let mouseX = -100;
+    let mouseY = -100;
+    let cursorX = -100;
+    let cursorY = -100;
+    let targetX = mouseX;
+    let targetY = mouseY;
+    let targetWidth = 8;
+    let targetHeight = 8;
+    let activeElement = null;
+
+    window.addEventListener('mousemove', (event) => {
+        mouseX = event.clientX;
+        mouseY = event.clientY;
+    }, { passive: true });
+
+    const magneticSelector = 'a, button, input, .btn, .kinetix-nav-link, .kinetix-card, .btn-kinetix-crimson, [role="button"]';
+
+    document.addEventListener('mouseover', (event) => {
+        const target = event.target.closest(magneticSelector);
+        if (target) {
+            activeElement = target;
+            cursor.classList.add('is-snapped');
+        }
+    });
+
+    document.addEventListener('mouseout', (event) => {
+        const target = event.target.closest(magneticSelector);
+        if (target && (!event.relatedTarget || !target.contains(event.relatedTarget))) {
+            activeElement = null;
+            cursor.classList.remove('is-snapped');
+        }
+    });
+
+    document.querySelectorAll('.card-style-spotlight').forEach((card) => {
         card.addEventListener('mousemove', (event) => {
             const rect = card.getBoundingClientRect();
             card.style.setProperty('--mouse-x', `${event.clientX - rect.left}px`);
@@ -8,30 +56,36 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    if (!window.matchMedia('(pointer: fine)').matches) {
-        return;
+    function animate() {
+        if (activeElement) {
+            const rect = activeElement.getBoundingClientRect();
+            targetWidth = rect.width + 12;
+            targetHeight = rect.height + 12;
+            targetX = rect.left + rect.width / 2;
+            targetY = rect.top + rect.height / 2;
+            cursor.style.borderRadius = window.getComputedStyle(activeElement).borderRadius || '9999px';
+        } else {
+            targetWidth = 8;
+            targetHeight = 8;
+            targetX = mouseX;
+            targetY = mouseY;
+            cursor.style.borderRadius = '9999px';
+        }
+
+        cursorX += (targetX - cursorX) * 0.22;
+        cursorY += (targetY - cursorY) * 0.22;
+        cursor.style.width = `${targetWidth}px`;
+        cursor.style.height = `${targetHeight}px`;
+        cursor.style.transform = `translate3d(${cursorX - targetWidth / 2}px, ${cursorY - targetHeight / 2}px, 0)`;
+        window.requestAnimationFrame(animate);
     }
 
-    const cursorStyle = document.body.className.match(/kinetix-cursor-style-([a-z-]+)/);
-    if (cursorStyle && cursorStyle[1] === 'none') {
-        return;
-    }
-
-    const dot = document.createElement('div');
-    dot.className = 'kinetix-cursor-dot';
-    document.body.appendChild(dot);
-
-    const ring = document.createElement('div');
-    ring.className = 'kinetix-cursor-ring';
-    document.body.appendChild(ring);
-
-    window.addEventListener('mousemove', (e) => {
-        dot.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)`;
-        ring.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)`;
+    document.addEventListener('mouseleave', () => {
+        cursor.style.opacity = '0';
+    });
+    document.addEventListener('mouseenter', () => {
+        cursor.style.opacity = '1';
     });
 
-    document.querySelectorAll('a, button, input, textarea, select').forEach((element) => {
-        element.addEventListener('mouseenter', () => ring.classList.add('is-hovering'));
-        element.addEventListener('mouseleave', () => ring.classList.remove('is-hovering'));
-    });
+    window.requestAnimationFrame(animate);
 });

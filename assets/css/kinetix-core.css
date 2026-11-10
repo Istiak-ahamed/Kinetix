@@ -21,16 +21,6 @@
     --font-body: 'Inter', sans-serif;
 }
 
-html,
-body,
-a,
-button,
-input,
-textarea,
-select {
-    cursor: none !important;
-}
-
 /* Global Reset */
 body {
     background-color: var(--kinetix-black) !important;
@@ -241,4 +231,169 @@ body.kinetix-cursor-style-none select {
 .kinetix-card:hover {
     transform: translateY(-4px);
     border-color: var(--kinetix-border-hover);
+}
+
+/* ========================================================
+   APPLE MAGNETIC FLUID CAPSULE ENGINE
+   ======================================================== */
+@media (pointer: fine) {
+    html, body, a, button, input, textarea, select, [role="button"], .btn {
+        cursor: none !important;
+    }
+}
+
+.kinetix-magnetic-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 9999px;
+    background: #ffffff;
+    pointer-events: none;
+    z-index: 99999999;
+    will-change: transform, width, height, border-radius, background, border;
+    box-shadow: 0 0 10px rgba(255, 42, 42, 0.5);
+    transition:
+        width 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+        height 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+        border-radius 0.25s ease,
+        background 0.2s ease,
+        border 0.2s ease,
+        opacity 0.2s ease;
+}
+
+/* Snapped State (Morphs into fluid glass capsule) */
+.kinetix-magnetic-cursor.is-snapped {
+    background: rgba(255, 42, 42, 0.12) !important;
+    border: 1.5px solid rgba(255, 42, 42, 0.5) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 0 25px rgba(255, 42, 42, 0.25);
+}
+
+.card-style-spotlight {
+    position: relative;
+    overflow: hidden;
+    background: #111111;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.card-style-spotlight::before {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        600px circle at var(--mouse-x, -1000px) var(--mouse-y, -1000px),
+        rgba(255, 42, 42, 0.12),
+        transparent 40%
+    );
+    content: '';
+    pointer-events: none;
+}
+
+.card-style-spotlight > * {
+    position: relative;
+    z-index: 1;
+}
+
+.card-style-apple {
+    background: rgba(18, 18, 18, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.card-style-apple:hover {
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.3);
+}
+
+.card-style-halo:hover {
+    box-shadow: 0 0 30px rgba(255, 42, 42, 0.18);
+}
+
+.card-style-hud {
+    border: 1px solid #ff2a2a;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    box-shadow: inset 0 0 24px rgba(255, 42, 42, 0.08);
+}
+
+.card-style-hud::before,
+.card-style-hud::after {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-color: #ff2a2a;
+    content: '';
+    pointer-events: none;
+}
+
+.card-style-hud::before {
+    top: -1px;
+    left: -1px;
+    border-top: 3px solid;
+    border-left: 3px solid;
+}
+
+.card-style-hud::after {
+    right: -1px;
+    bottom: -1px;
+    border-right: 3px solid;
+    border-bottom: 3px solid;
+}
+
+.header-style-apple .kinetix-nav-floating,
+.header-layout-apple {
+    top: 0;
+    width: 100%;
+    max-width: none;
+    border-width: 0 0 1px;
+    border-radius: 0;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.header-style-split .kinetix-nav-floating,
+.header-layout-split {
+    width: auto;
+    max-width: none;
+    background: transparent;
+    border: 0;
+    padding: 0;
+}
+
+.header-style-split .kinetix-header-inner {
+    gap: 12px;
+}
+
+.header-style-split .kinetix-brand,
+.header-style-split .kinetix-header-nav,
+.header-style-split .kinetix-header-cta {
+    background: rgba(14, 14, 14, 0.82);
+    border: 1px solid var(--kinetix-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.header-style-split .kinetix-brand,
+.header-style-split .kinetix-header-cta {
+    padding: 10px 20px;
+    border-radius: 9999px;
+}
+
+.header-style-split .kinetix-header-nav {
+    padding: 2px 8px;
+    border-radius: 9999px;
+}
+
+.header-style-minimal .kinetix-nav-floating,
+.header-layout-minimal {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+}
+
+.header-style-minimal .kinetix-nav-floating:hover,
+.header-layout-minimal:hover {
+    border-color: var(--kinetix-border);
 }

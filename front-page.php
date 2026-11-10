@@ -38,7 +38,7 @@ get_header();
                 </div>
 
                 <div class="col-lg-5">
-                    <article class="kinetix-card aceternity-spotlight-card h-100">
+                    <article class="kinetix-card <?php echo esc_attr('card-style-' . get_theme_mod('kinetix_card_style', 'spotlight')); ?> h-100">
                         <div class="d-flex align-items-center justify-content-between mb-4">
                             <span class="badge rounded-pill bg-danger text-white"><?php echo esc_html__('ON-AIR READY', 'kinetix'); ?></span>
                             <span class="small text-secondary"><?php echo esc_html__('01 / 04', 'kinetix'); ?></span>

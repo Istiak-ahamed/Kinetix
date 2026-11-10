@@ -14,28 +14,28 @@ function kinetix_enqueue_assets() {
 		'kinetix-google-fonts',
 		'https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap',
 		array(),
-		null
+		time()
 	);
 
 	wp_enqueue_style(
 		'bootstrap',
 		'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css',
 		array(),
-		'5.3.3'
+		time()
 	);
 
 	wp_enqueue_style(
 		'kinetix-core',
 		$theme_uri . '/assets/css/kinetix-core.css',
 		array( 'bootstrap' ),
-		null
+		time()
 	);
 
 	wp_enqueue_script(
 		'bootstrap',
 		'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js',
 		array(),
-		'5.3.3',
+		time(),
 		true
 	);
 
@@ -43,9 +43,8 @@ function kinetix_enqueue_assets() {
 		'kinetix-cursor',
 		$theme_uri . '/assets/js/kinetix-cursor.js',
 		array(),
-		null,
+		time(),
 		true
 	);
 }
 add_action( 'wp_enqueue_scripts', 'kinetix_enqueue_assets' );
-
