@@ -1,0 +1,111 @@
+/*
+ * Kinetix core styles.
+ */
+
+/**
+ * Kinetix Core Styling Engine
+ * Design Language: Quayutec Dark Tech + VetSafeCare Clean Precision
+ */
+
+:root {
+    --kinetix-black: #080808;
+    --kinetix-card: #111111;
+    --kinetix-card-elevated: #161616;
+    --kinetix-border: rgba(255, 255, 255, 0.08);
+    --kinetix-border-hover: rgba(255, 255, 255, 0.2);
+    --kinetix-crimson: #ff2a2a;
+    --kinetix-crimson-glow: rgba(255, 42, 42, 0.25);
+    --kinetix-text: #f0f0f0;
+    --kinetix-muted: #8a8a8a;
+    --font-heading: 'Anton', sans-serif;
+    --font-body: 'Inter', sans-serif;
+}
+
+/* Global Reset */
+body {
+    background-color: var(--kinetix-black) !important;
+    color: var(--kinetix-text) !important;
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6, .display-heading {
+    font-family: var(--font-heading);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #ffffff;
+}
+
+/* Quayutec Floating Glass Navbar */
+.kinetix-nav-floating {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1050;
+    width: calc(100% - 48px);
+    max-width: 1100px;
+    background: rgba(14, 14, 14, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--kinetix-border);
+    border-radius: 9999px;
+    padding: 10px 24px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.kinetix-nav-floating:hover {
+    border-color: var(--kinetix-border-hover);
+}
+
+.kinetix-nav-link {
+    color: var(--kinetix-muted) !important;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 9999px;
+    transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.kinetix-nav-link:hover,
+.kinetix-nav-link.active {
+    color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Primary Crimson Pill Button */
+.btn-kinetix-crimson {
+    background: var(--kinetix-crimson) !important;
+    color: #ffffff !important;
+    border: none;
+    border-radius: 9999px;
+    padding: 10px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.btn-kinetix-crimson:hover {
+    background: #e61e1e !important;
+    transform: translateY(-2px);
+    box-shadow: 0 0 25px var(--kinetix-crimson-glow);
+}
+
+/* Bento Surface Cards */
+.kinetix-card {
+    background: var(--kinetix-card);
+    border: 1px solid var(--kinetix-border);
+    border-radius: 20px;
+    padding: 32px;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+}
+
+.kinetix-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--kinetix-border-hover);
+}

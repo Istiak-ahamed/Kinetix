@@ -1,0 +1,38 @@
+/*
+Theme Name: Kinetix Enterprise
+Theme URI: https://kinetixtheme.com
+Author: Istiak Ahamed
+Author URI: https://istiakahamed.com
+Description: Ultra-performance dark mode portfolio and authority publishing theme for creative directors, tech founders, and researchers.
+Version: 1.0.0
+Requires at least: 6.4
+Tested up to: 6.7
+Requires PHP: 8.0
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: kinetix
+*/
+
+/* Global Reset & Base Variables */
+:root {
+    --kinetix-bg: #080808;
+    --kinetix-surface: #121212;
+    --kinetix-surface-elevated: #1a1a1a;
+    --kinetix-border: rgba(255, 255, 255, 0.08);
+    --kinetix-border-hover: rgba(255, 255, 255, 0.2);
+    --kinetix-accent: #ff2a2a;
+    --kinetix-accent-glow: rgba(255, 42, 42, 0.25);
+    --kinetix-text: #f5f5f5;
+    --kinetix-muted: #888888;
+    --kinetix-font-display: 'Anton', sans-serif;
+    --kinetix-font-body: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--kinetix-bg);
+    color: var(--kinetix-text);
+    font-family: var(--kinetix-font-body);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
