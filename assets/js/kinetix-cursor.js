@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    document.querySelectorAll('.kinetix-cursor-*, .kinetix-magnetic-cursor').forEach((element) => {
+    document.querySelectorAll('[class^="kinetix-cursor-"], [class*=" kinetix-cursor-"], .kinetix-magnetic-cursor').forEach((element) => {
         element.remove();
     });
 
@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const cursor = document.createElement('div');
     cursor.className = 'kinetix-magnetic-cursor';
     document.body.appendChild(cursor);
+    document.documentElement.classList.add('kinetix-custom-cursor-ready');
+    document.body.classList.add('kinetix-custom-cursor-ready');
 
     let mouseX = -100;
     let mouseY = -100;
@@ -21,19 +23,20 @@ document.addEventListener('DOMContentLoaded', () => {
     let cursorY = -100;
     let targetX = mouseX;
     let targetY = mouseY;
-    let targetWidth = 8;
-    let targetHeight = 8;
+    let targetWidth = 16;
+    let targetHeight = 16;
     let activeElement = null;
 
     window.addEventListener('mousemove', (event) => {
         mouseX = event.clientX;
         mouseY = event.clientY;
+        cursor.style.opacity = '1';
     }, { passive: true });
 
     const magneticSelector = 'a, button, input, .btn, .kinetix-nav-link, .kinetix-card, .btn-kinetix-crimson, [role="button"]';
 
     document.addEventListener('mouseover', (event) => {
-        const target = event.target.closest(magneticSelector);
+        const target = event.target instanceof Element ? event.target.closest(magneticSelector) : null;
         if (target) {
             activeElement = target;
             cursor.classList.add('is-snapped');
@@ -41,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.addEventListener('mouseout', (event) => {
-        const target = event.target.closest(magneticSelector);
+        const target = event.target instanceof Element ? event.target.closest(magneticSelector) : null;
         if (target && (!event.relatedTarget || !target.contains(event.relatedTarget))) {
             activeElement = null;
             cursor.classList.remove('is-snapped');
@@ -65,8 +68,8 @@ document.addEventListener('DOMContentLoaded', () => {
             targetY = rect.top + rect.height / 2;
             cursor.style.borderRadius = window.getComputedStyle(activeElement).borderRadius || '9999px';
         } else {
-            targetWidth = 8;
-            targetHeight = 8;
+            targetWidth = 16;
+            targetHeight = 16;
             targetX = mouseX;
             targetY = mouseY;
             cursor.style.borderRadius = '9999px';
