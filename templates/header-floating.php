@@ -15,7 +15,7 @@ defined('ABSPATH') || exit;
             <a class="kinetix-nav-link" href="<?php echo esc_url(home_url('/#about')); ?>"><?php echo esc_html__('About', 'kinetix'); ?></a>
         </div>
 
-        <a class="btn-kinetix-crimson text-nowrap" href="<?php echo esc_url(home_url('/#book-a-sprint')); ?>">
+        <a class="btn-kinetix-crimson aceternity-shimmer-btn text-nowrap" href="<?php echo esc_url(home_url('/#book-a-sprint')); ?>">
             <?php echo esc_html__('Book a Sprint', 'kinetix'); ?>
         </a>
     </div>

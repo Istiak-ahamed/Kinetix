@@ -9,7 +9,7 @@ get_header();
 ?>
 
 <main id="primary" class="site-main">
-    <section class="kinetix-hero py-5" aria-labelledby="kinetix-hero-title">
+    <section class="kinetix-hero aceternity-bg-grid py-5" aria-labelledby="kinetix-hero-title">
         <div class="container py-5">
             <div class="row align-items-center g-5">
                 <div class="col-lg-7">
@@ -23,7 +23,7 @@ get_header();
                         <?php echo esc_html__('High-impact visual systems, show packages, and motion identities for brands that need to own the room.', 'kinetix'); ?>
                     </p>
                     <div class="d-flex flex-wrap gap-3 mb-4">
-                        <a class="btn-kinetix-crimson" href="<?php echo esc_url(home_url('/#work')); ?>">
+                        <a class="btn-kinetix-crimson aceternity-shimmer-btn" href="<?php echo esc_url(home_url('/#work')); ?>">
                             <?php echo esc_html__('View the work', 'kinetix'); ?>
                         </a>
                         <a class="btn btn-outline-light rounded-pill px-4" href="<?php echo esc_url(home_url('/#book-a-sprint')); ?>">
@@ -38,7 +38,7 @@ get_header();
                 </div>
 
                 <div class="col-lg-5">
-                    <article class="kinetix-card h-100">
+                    <article class="kinetix-card aceternity-spotlight-card h-100">
                         <div class="d-flex align-items-center justify-content-between mb-4">
                             <span class="badge rounded-pill bg-danger text-white"><?php echo esc_html__('ON-AIR READY', 'kinetix'); ?></span>
                             <span class="small text-secondary"><?php echo esc_html__('01 / 04', 'kinetix'); ?></span>

@@ -16,6 +16,7 @@ define('KINETIX_URI', get_template_directory_uri());
 require_once KINETIX_DIR . '/inc/core/enqueue.php';
 require_once KINETIX_DIR . '/inc/core/post-types.php';
 require_once KINETIX_DIR . '/inc/core/template-tags.php';
+require_once KINETIX_DIR . '/inc/customizer/customizer.php';
 
 // 2. Load Scholar Publishing Engine
 require_once KINETIX_DIR . '/inc/scholar/class-google-scholar.php';

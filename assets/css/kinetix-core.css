@@ -21,6 +21,16 @@
     --font-body: 'Inter', sans-serif;
 }
 
+html,
+body,
+a,
+button,
+input,
+textarea,
+select {
+    cursor: none !important;
+}
+
 /* Global Reset */
 body {
     background-color: var(--kinetix-black) !important;
@@ -35,6 +45,52 @@ h1, h2, h3, h4, h5, h6, .display-heading {
     letter-spacing: 0.04em;
     text-transform: uppercase;
     color: #ffffff;
+}
+
+/* Aceternity-inspired background grid */
+.aceternity-bg-grid {
+    position: relative;
+    isolation: isolate;
+    background-color: var(--kinetix-black);
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 44px 44px;
+}
+
+.aceternity-bg-grid::before {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(ellipse at center, transparent 20%, #080808 80%);
+    content: '';
+    pointer-events: none;
+    -webkit-mask-image: radial-gradient(ellipse at center, transparent 20%, #000 80%);
+    mask-image: radial-gradient(ellipse at center, transparent 20%, #000 80%);
+}
+
+.aceternity-spotlight-card {
+    position: relative;
+    overflow: hidden;
+    background: #111111;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.aceternity-spotlight-card::before {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        600px circle at var(--mouse-x, -1000px) var(--mouse-y, -1000px),
+        rgba(255, 42, 42, 0.12),
+        transparent 40%
+    );
+    content: '';
+    pointer-events: none;
+}
+
+.aceternity-spotlight-card > * {
+    position: relative;
+    z-index: 1;
 }
 
 /* Quayutec Floating Glass Navbar */
@@ -94,6 +150,83 @@ h1, h2, h3, h4, h5, h6, .display-heading {
     background: #e61e1e !important;
     transform: translateY(-2px);
     box-shadow: 0 0 25px var(--kinetix-crimson-glow);
+}
+
+.aceternity-shimmer-btn {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+.aceternity-shimmer-btn::after {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+        110deg,
+        transparent 20%,
+        rgba(255, 255, 255, 0.25) 45%,
+        transparent 70%
+    );
+    content: '';
+    transform: translateX(-120%);
+    animation: kinetix-shimmer 3.5s ease-in-out infinite;
+}
+
+@keyframes kinetix-shimmer {
+    0%,
+    55% {
+        transform: translateX(-120%);
+    }
+    100% {
+        transform: translateX(120%);
+    }
+}
+
+.kinetix-cursor-ring,
+.kinetix-cursor-dot {
+    pointer-events: none;
+    position: fixed;
+    z-index: 999999;
+}
+
+.kinetix-cursor-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ff2a2a;
+    box-shadow: 0 0 12px rgba(255, 42, 42, 0.8);
+    transform: translate(-50%, -50%);
+}
+
+.kinetix-cursor-ring {
+    width: 36px;
+    height: 36px;
+    border: 1.5px solid #ff2a2a;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 180ms ease, height 180ms ease, background-color 180ms ease;
+}
+
+.kinetix-cursor-ring.is-hovering {
+    width: 56px;
+    height: 56px;
+    background: rgba(255, 42, 42, 0.14);
+}
+
+body.kinetix-cursor-style-none .kinetix-cursor-dot,
+body.kinetix-cursor-style-none .kinetix-cursor-ring,
+body.kinetix-cursor-style-minimal-dot .kinetix-cursor-ring {
+    display: none;
+}
+
+body.kinetix-cursor-style-none,
+body.kinetix-cursor-style-none a,
+body.kinetix-cursor-style-none button,
+body.kinetix-cursor-style-none input,
+body.kinetix-cursor-style-none textarea,
+body.kinetix-cursor-style-none select {
+    cursor: auto !important;
 }
 
 /* Bento Surface Cards */
